@@ -114,12 +114,28 @@ export default function Navbar() {
                 <Link to="/shop" className="text-black hover:text-gray-700">
                   Shop
                 </Link>
-                <Link to="#" className="text-black hover:text-gray-700">
-                  Our Story
-                </Link>
-                <Link to="#" className="text-black hover:text-gray-700">
-                  Contact us
-                </Link>
+                {userData ? (
+                  <div
+                    onClick={() => {
+                      navigate("/profile/myprofile");
+                    }}
+                    className="flex items-center cursor-pointer justify-center bg-gray-300 text-black rounded-full w-10 h-10 font-bold"
+                  >
+                    {userData.name.charAt(0).toUpperCase()}
+                    {userData.name
+                      .charAt(userData.name.length - 1)
+                      .toUpperCase()}
+                  </div>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      navigate("/login");
+                    }}
+                    className="bg-black text-white hidden md:inline-flex hover:scale-105"
+                  >
+                    Login
+                  </Button>
+                )}
               </div>
             </div>
           </div>
