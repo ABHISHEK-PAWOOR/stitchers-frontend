@@ -131,7 +131,7 @@ export default function Navbar() {
                     onClick={() => {
                       navigate("/login");
                     }}
-                    className="bg-black text-white hidden md:inline-flex hover:scale-105"
+                    className="bg-black text-white  hover:scale-105"
                   >
                     Login
                   </Button>
