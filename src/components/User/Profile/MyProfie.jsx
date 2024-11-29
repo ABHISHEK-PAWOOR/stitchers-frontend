@@ -179,13 +179,13 @@ function MyProfie() {
 
           <div className="mt-8 flex justify-between border-t pt-4">
             <Link
-              to={"/user/profile/orders"}
+              to={"/profile/orders"}
               className="text-gray-600 hover:text-black transition-colors border-b border-gray-300 hover:border-black"
             >
               Order Details
             </Link>
             <Link
-              to={"/user/profile/wallet"}
+              to={"/profile/wallet"}
               className="text-gray-600 hover:text-black transition-colors border-b border-gray-300 hover:border-black"
             >
               My Wallet
