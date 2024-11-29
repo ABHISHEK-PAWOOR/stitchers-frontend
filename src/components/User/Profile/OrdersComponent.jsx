@@ -65,6 +65,7 @@ export default function OrdersComponent() {
           const response = await axiosInstance.put(
             `/user/order/cancel/${orderId}/${itemId}`
           );
+          setIsOpen(false);
           setreload(true);
           return toast.success(response.data.message);
         } catch (err) {
