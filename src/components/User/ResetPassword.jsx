@@ -10,18 +10,6 @@ export default function ResetPassword() {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    if (!newPassword?.trim()) {
-      return toast.error("Password is required");
-    } else if (
-      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/.test(
-        newPassword.trim()
-      )
-    ) {
-      return toast.error(
-        "Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, and a number"
-      );
-    }
-
     e.preventDefault();
     try {
       const response = await axiosInstance.post("/user/reset-password", {

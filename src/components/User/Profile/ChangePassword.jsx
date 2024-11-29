@@ -1,22 +1,21 @@
-import { useState } from 'react'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { AlertCircle } from "lucide-react"
-import ConfirmationModal from '@/components/shared/confirmationModal'
-import axiosInstance from '@/AxiosConfig'
-import { toast } from 'sonner'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { logoutUser } from '@/store/slice/userSlice'
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { AlertCircle } from "lucide-react";
+import ConfirmationModal from "@/components/shared/confirmationModal";
+import axiosInstance from "@/AxiosConfig";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "@/store/slice/userSlice";
 
 export default function ChangePassword() {
-
-  const userData = useSelector((store)=>store.user.userDatas);
-  const [currentPassword, setCurrentPassword] = useState('')
-  const [newPassword, setNewPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const userData = useSelector((store) => store.user.userDatas);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState({
@@ -26,30 +25,45 @@ export default function ChangePassword() {
   });
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setModalContent({
-        title: "Change Password",
-        message: "Are you sure you want to Change to this new password?",
-        onConfirm: async () => {
-         try {
-            console.log(userData);
-            
-            const _id = userData._id
-            const response =await axiosInstance.post("/user/change-password",{currentPassword,newPassword,confirmPassword,_id});
-            toast.success(response.data.message);
-            dispatch(logoutUser());
-            navigate("/login")
-         } catch (err) {
-            console.log(err);
-            if(err.response){
-                toast.error(err.response.data.message)
-            }
-         }
-          
-        },
-      });
-      setIsOpen(true);
-  }
+      title: "Change Password",
+      message: "Are you sure you want to Change to this new password?",
+      onConfirm: async () => {
+        try {
+          if (!newPassword?.trim()) {
+            return toast.error("Password is required");
+          } else if (
+            !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/.test(
+              newPassword.trim()
+            )
+          ) {
+            return toast.error(
+              "Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, and a number"
+            );
+          }
+          console.log(userData);
+
+          const _id = userData._id;
+          const response = await axiosInstance.post("/user/change-password", {
+            currentPassword,
+            newPassword,
+            confirmPassword,
+            _id,
+          });
+          toast.success(response.data.message);
+          dispatch(logoutUser());
+          navigate("/login");
+        } catch (err) {
+          console.log(err);
+          if (err.response) {
+            toast.error(err.response.data.message);
+          }
+        }
+      },
+    });
+    setIsOpen(true);
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 sm:px-6 lg:px-8">
@@ -69,7 +83,10 @@ export default function ChangePassword() {
         <div className="rounded-md bg-yellow-50 p-4">
           <div className="flex">
             <div className="flex-shrink-0">
-              <AlertCircle className="h-5 w-5 text-yellow-400" aria-hidden="true" />
+              <AlertCircle
+                className="h-5 w-5 text-yellow-400"
+                aria-hidden="true"
+              />
             </div>
             <div className="ml-3">
               <h3 className="text-sm font-medium text-yellow-800">
@@ -77,7 +94,8 @@ export default function ChangePassword() {
               </h3>
               <div className="mt-2 text-sm text-yellow-700">
                 <p>
-                  Changing your password will log you out of all devices. You'll need to log in again with your new password.
+                  Changing your password will log you out of all devices. You'll
+                  need to log in again with your new password.
                 </p>
               </div>
             </div>
@@ -134,7 +152,7 @@ export default function ChangePassword() {
 
           <div>
             <Button
-            //   type="submit"
+              //   type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-black hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Change Password
@@ -143,5 +161,5 @@ export default function ChangePassword() {
         </form>
       </div>
     </div>
-  )
+  );
 }
