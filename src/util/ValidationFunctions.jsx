@@ -121,10 +121,12 @@ export function validateSignup(name, email, phone, password, setError) {
 
   if (!name?.trim()) {
     error.name = "Name is required";
-  } else if (/^\d/.test(name.trim())) {
-    error.name = "Name should not start with a number";
-  } else if (!/^[a-zA-Z0-9\s]+$/.test(name.trim())) {
-    error.name = "Name can only contain letters, numbers, and spaces";
+  } else if (/\d/.test(name.trim())) {
+    error.name = "Name should not contain numbers"; // Updated rule
+  } else if (/ {2,}/.test(name.trim())) {
+    error.name = "Name should not contain consecutive spaces"; // Added rule
+  } else if (!/^[a-zA-Z\s]+$/.test(name.trim())) {
+    error.name = "Name can only contain letters and spaces"; // Updated regex
   }
 
   if (!email?.trim()) {
@@ -146,12 +148,13 @@ export function validateSignup(name, email, phone, password, setError) {
   if (!password?.trim()) {
     error.password = "Password is required";
   } else if (
-    !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/.test(password.trim())
+    !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/.test(
+      password.trim()
+    )
   ) {
     error.password =
       "Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, and a number";
   }
-  
 
   setError(error);
   if (Object.keys(error).length == 0) {
