@@ -114,19 +114,7 @@ export default function Navbar() {
                 <Link to="/shop" className="text-black hover:text-gray-700">
                   Shop
                 </Link>
-                {userData ? (
-                  <div
-                    onClick={() => {
-                      navigate("/profile/myprofile");
-                    }}
-                    className="flex items-center cursor-pointer justify-center bg-gray-300 text-black rounded-full w-10 h-10 font-bold"
-                  >
-                    {userData.name.charAt(0).toUpperCase()}
-                    {userData.name
-                      .charAt(userData.name.length - 1)
-                      .toUpperCase()}
-                  </div>
-                ) : (
+                {!userData && (
                   <Button
                     onClick={() => {
                       navigate("/login");

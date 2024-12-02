@@ -50,13 +50,13 @@ export default function ViewOrderDetails() {
       <h1 className="text-2xl md:text-3xl font-bold mb-6">Order Details</h1>
 
       {adminData ? (
-        <div className="flex items-center gap-2 text-sm md:text-base text-gray-600 mb-8">
+        <div className="flex flex-wrap items-center gap-2 text-sm md:text-base text-gray-600 mb-8">
           <span>orders</span>
           <span className="text-gray-300">/</span>
           <span className="font-medium text-black">Order Details</span>
         </div>
       ) : (
-        <div className="flex items-center gap-2 text-sm md:text-base text-gray-600 mb-8">
+        <div className="flex flex-wrap items-center gap-2 text-sm md:text-base text-gray-600 mb-8">
           <span>home</span>
           <span className="text-gray-300">/</span>
           <span>profile</span>
@@ -68,27 +68,31 @@ export default function ViewOrderDetails() {
       )}
 
       <div className="bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
-        <div className="bg-gray-50 border-b border-gray-200 p-6 md:p-8 flex justify-between">
+        <div className="bg-gray-50 border-b border-gray-200 p-4 sm:p-6 md:p-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <h2 className="text-2xl font-semibold">
+            <h2 className="text-xl sm:text-2xl font-semibold">
               Order #{orderData?.order_id || "N/A"}
             </h2>
-            <p className="text-base text-gray-600 mt-2">
+            <p className="text-sm sm:text-base text-gray-600 mt-2">
               Placed on:{" "}
               {orderData?.placed_at
                 ? new Date(orderData.placed_at).toLocaleDateString()
                 : "N/A"}
             </p>
           </div>
-          <Button onClick={handleDownloadInvoice}>Download Invoice</Button>
+          <Button onClick={handleDownloadInvoice} className="w-full sm:w-auto">
+            Download Invoice
+          </Button>
         </div>
 
-        <div className="p-6 md:p-8 space-y-8">
+        <div className="p-4 sm:p-6 md:p-8 space-y-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="space-y-6">
               <div>
-                <h3 className="text-xl font-semibold mb-3">Shipping Address</h3>
-                <p className="text-lg">
+                <h3 className="text-lg sm:text-xl font-semibold mb-3">
+                  Shipping Address
+                </h3>
+                <p className="text-base sm:text-lg">
                   {orderData?.shipping_address?.name || "N/A"}
                 </p>
                 <p>{orderData?.shipping_address?.address || "N/A"}</p>
@@ -106,14 +110,14 @@ export default function ViewOrderDetails() {
                 <p>Phone: {orderData?.shipping_address?.phone || "N/A"}</p>
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-3">
+                <h3 className="text-lg sm:text-xl font-semibold mb-3">
                   Payment Information
                 </h3>
                 <p>Method: {orderData?.payment_method || "N/A"}</p>
               </div>
               {orderData?.order_status != "Cancelled" && (
                 <div>
-                  <h3 className="text-xl font-semibold mb-3">
+                  <h3 className="text-lg sm:text-xl font-semibold mb-3">
                     Delivery Information
                   </h3>
                   <p>
@@ -126,18 +130,14 @@ export default function ViewOrderDetails() {
               )}
             </div>
             <div>
-              <h3 className="text-xl font-semibold mb-3">Order Summary</h3>
-              <div className="space-y-2 text-lg">
+              <h3 className="text-lg sm:text-xl font-semibold mb-3">
+                Order Summary
+              </h3>
+              <div className="space-y-2 text-base sm:text-lg">
                 <div className="flex justify-between">
                   <span>Items Total:</span>
                   <span>₹{orderData?.total_amount?.toFixed(2) || "0.00"}</span>
                 </div>
-                {/* <div className='flex justify-between'>
-                  <span>Discount:</span>
-                  <span>
-                    -₹{orderData?.total_discount?.toFixed(2) || "0.00"}
-                  </span>
-                </div> */}
                 <div className="flex justify-between">
                   <span>Coupon Discount:</span>
                   <span>
@@ -152,7 +152,7 @@ export default function ViewOrderDetails() {
                       : "Free"}
                   </span>
                 </div>
-                <div className="flex justify-between font-semibold text-xl pt-4 border-t">
+                <div className="flex justify-between font-semibold text-lg sm:text-xl pt-4 border-t">
                   <span>Total:</span>
                   <span>
                     ₹
@@ -164,39 +164,41 @@ export default function ViewOrderDetails() {
           </div>
 
           <div>
-            <h3 className="text-xl font-semibold mb-4">Order Items</h3>
+            <h3 className="text-lg sm:text-xl font-semibold mb-4">
+              Order Items
+            </h3>
             <div className="space-y-6">
               {orderData?.order_items?.map((item, index) => (
                 <div
                   key={index}
-                  className="flex items-center gap-6 py-6 border-b last:border-b-0"
+                  className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 py-6 border-b last:border-b-0"
                 >
                   <img
                     src={item?.product?.images?.[0] || ""}
                     alt={item?.product?.name || "Product Image"}
-                    className="w-32 h-52 object-cover rounded-md"
+                    className="w-full sm:w-32 h-52 object-cover rounded-md"
                   />
                   <div className="flex-grow">
-                    <h4 className="text-lg font-medium">
+                    <h4 className="text-base sm:text-lg font-medium">
                       {item?.product?.name || "N/A"}
                     </h4>
-                    <p className="text-base text-gray-600">
+                    <p className="text-sm sm:text-base text-gray-600">
                       Quantity: {item?.qty || "0"}
                     </p>
-                    <p className="text-base text-gray-600">
+                    <p className="text-sm sm:text-base text-gray-600">
                       Price: ₹{item?.price?.toFixed(2) || "0.00"}
                     </p>
-                    <p className="text-base text-gray-600">
+                    <p className="text-sm sm:text-base text-gray-600">
                       Payment Status: {item?.payment_status || "N/A"}
                     </p>
                   </div>
-                  <div className="text-right">
-                    <p className="text-lg font-medium">Price:</p>
-                    <p className="text-base text-gray-600">
+                  <div className="text-left sm:text-right w-full sm:w-auto">
+                    <p className="text-base sm:text-lg font-medium">Price:</p>
+                    <p className="text-sm sm:text-base text-gray-600">
                       ₹{item?.total_price?.toFixed(2) || "0.00"}
                     </p>
 
-                    <span className="text-green-800 font-semibold">
+                    <span className="text-green-800 font-semibold text-sm sm:text-base">
                       Delivered on:
                       {item?.Delivered_on
                         ? new Date(item?.Delivered_on).toLocaleDateString()

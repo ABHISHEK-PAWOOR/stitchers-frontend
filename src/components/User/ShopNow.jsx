@@ -73,7 +73,7 @@ const ShopNow = () => {
   }, [page, selectedFilters, search, sortBy]);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className=" container  md:mx-auto md:px-4 md:py-8">
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Responsive Sidebar */}
         <Sheet>
@@ -99,7 +99,7 @@ const ShopNow = () => {
         />
 
         {/* Main Content */}
-        <div className="flex-grow pl-8 pr-8">
+        <div className="flex-grow md:pl-8 md:pr-8">
           {/* Top Bar */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
             <h1 className="text-3xl font-bold">Products</h1>

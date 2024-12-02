@@ -3,6 +3,13 @@ import { Route, Routes } from "react-router-dom";
 import ProtectedLogin from "./private/ProtectedLogin";
 import ProtectedHome from "./private/ProtectedHome";
 import Navbar from "./components/ui/Navbar";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "./components/ui/card";
+import { Skeleton } from "./components/ui/skeleton";
 
 // Lazy load components
 const SignupPage = lazy(() => import("./Pages/SignupPage"));
@@ -18,10 +25,29 @@ const ResetPassword = lazy(() => import("./components/User/ResetPassword"));
 const WishlistPage = lazy(() => import("./Pages/WishlistPage"));
 const PageNotFound = lazy(() => import("./components/shared/PageNotFound"));
 
+const SkeletonCard = () => (
+  <Card className="w-full">
+    <CardHeader className="space-y-2">
+      <Skeleton className="h-6 w-1/2" />
+      <Skeleton className="h-4 w-3/4" />
+    </CardHeader>
+    <CardContent>
+      <Skeleton className="h-32 w-full" />
+    </CardContent>
+    <CardFooter>
+      <Skeleton className="h-10 w-28" />
+    </CardFooter>
+  </Card>
+);
+
 // Loading component
 const Loading = () => (
-  <div className="flex justify-center items-center h-full">
-    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-blue-500"></div>
+  <div className="container mx-auto px-4">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {Array.from({ length: 8 }).map((_, index) => (
+        <SkeletonCard key={index} />
+      ))}
+    </div>
   </div>
 );
 

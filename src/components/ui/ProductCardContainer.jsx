@@ -1,8 +1,9 @@
 import { useState } from "react";
 import ProductCard from "./ProductCard";
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 import PropTypes from "prop-types";
 import { PackageX } from "lucide-react";
+import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 const ProductCardContainer = ({ title, products }) => {
   return (
     <section className="py-12">
@@ -12,15 +13,29 @@ const ProductCardContainer = ({ title, products }) => {
           {products.map((product, index) => (
             <ProductCard key={product._id} product={product} />
           ))}
-          {products.length == 0 && <motion.div
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="flex items-center justify-center p-8 text-muted-foreground"
-    >
-      <PackageX className="w-6 h-6 mr-2" />
-      <span>No products available in {title}</span>
-    </motion.div>}
+          {products.length == 0 && (
+            <Card className="w-full max-w-md mx-auto">
+              <CardContent>
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="flex flex-col items-center justify-center p-6 text-center"
+                >
+                  <PackageX
+                    className="w-12 h-12 mb-4 text-muted-foreground"
+                    aria-hidden="true"
+                  />
+                  <p className="text-lg font-medium text-muted-foreground">
+                    No products available in{" "}
+                    <span className="font-semibold text-foreground">
+                      {title}
+                    </span>
+                  </p>
+                </motion.div>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
     </section>
