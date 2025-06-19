@@ -11,9 +11,13 @@ import Login from "./components/Admin/Login";
 import LandingPage from "./Pages/LandingPage";
 import ProtectedAdminLogin from "./private/ProtectedAdminLogin";
 import { ToastContainer } from "react-toastify";
+import Clarity from "@microsoft/clarity";
 import PageNotFound from "./components/shared/PageNotFound";
 
 function App() {
+  useEffect(() => {
+    Clarity.init(import.meta.env.VITE_CLARITY_PROJECT_ID);
+  }, []);
   return (
     <>
       <Toaster richColors position="bottom-right" />
