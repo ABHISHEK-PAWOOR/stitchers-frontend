@@ -31,8 +31,8 @@ function Login() {
       });
 
       dispatch(addUser(response.data.userData));
-      console.log("user ===>", response.data.userData);
-      //  Clarity.identify(response.data.userData);
+      Clarity.identify(response.data.userData.email);
+
       navigate("/");
       return toast.success(response.data.message);
     } catch (err) {
