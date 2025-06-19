@@ -30,7 +30,7 @@ export default function Navbar() {
               Home
             </Link>
             <Link to="/shop" className="hover:text-gray-700">
-              Shop
+              Buy
             </Link>
           </div>
         </div>
