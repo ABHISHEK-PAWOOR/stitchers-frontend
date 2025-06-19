@@ -157,6 +157,7 @@ function Login() {
                 if (response.data.success) {
                   toast.success(response.data.message);
                   dispatch(addUser(response.data.userData));
+                  Clarity.identify(response.data.userData.email);
                   navigate("/");
                 }
               } catch (err) {
